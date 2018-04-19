@@ -1,5 +1,5 @@
 <mat-card>
-  <form #incomeDetails="ngForm">
+  <form #incomeDetails="ngForm" >
     <div class="appTaxForm-select">
       <mat-form-field>
         <mat-select [(value)]="optionSelected" placeholder="Please Select" [disabled]="selectDisabled">
@@ -15,9 +15,12 @@
         <input
           [(ngModel)]="incomeAmount"
           [formControl]="incomeFormControl"
+          [disabled]="selectDisabled"
           type="number"
           matInput
           placeholder="Annual Income">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
         <mat-hint>Enter your gross annual income</mat-hint>
         <mat-error *ngIf="incomeFormControl.hasError('required')">This field is required</mat-error>
         <mat-error *ngIf="incomeFormControl.hasError('min')">Please enter a number greater than 0</mat-error>
@@ -32,6 +35,8 @@
           type="number"
           matInput
           placeholder="Annual Income">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
         <mat-hint>Enter your gross annual income + Superannuation</mat-hint>
         <mat-error *ngIf="incomeFormControl.hasError('required')">This field is required</mat-error>
         <mat-error *ngIf="incomeFormControl.hasError('min')">Please enter a number greater than 0</mat-error>
@@ -46,14 +51,16 @@
           type="number"
           matInput
           placeholder="Superannuation percentage">
+        <span matPrefix>%&nbsp;</span>
         <mat-hint>Enter you super annuation percentage</mat-hint>
         <mat-error *ngIf="superannuationFormControl.hasError('max')">Please enter a value equal or less than 9.5%
         </mat-error>
       </mat-form-field>
     </div>
 
-    <div class="button-row" *ngIf="superAnnuationPercentage > 0 && superannuationFormControl.valid">
-      <button (click)="sendTaxDetails()" [disabled]="selectDisabled" mat-raised-button color="primary">Calculate Tax</button>
+    <div class="button-row">
+      <button (click)="sendTaxDetails()" *ngIf="superAnnuationPercentage > 0 && superannuationFormControl.valid" mat-raised-button color="primary">Calculate Tax</button>
+      <button (click)="refreshData()" *ngIf="showResetButton" mat-raised-button color="secondary">Clear Form</button>
     </div>
   </form>
 

@@ -1,5 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {TaxBand} from './tax-bands.constant';
+import {ITaxData} from './components/tax-results/tax-results.component.interface';
+import {ITaxDetails} from './components/tax-form/tax-form.component.interface';
 
 @Component({
   selector: 'app-root',
@@ -17,12 +19,12 @@ export class AppComponent {
   public netPlusSuper: number;
   public showResults: boolean;
   public superAnnuationAmount: number;
-  public taxResults: any[];
+  public taxResults: ITaxData[];
 
   constructor() {
   }
 
-  public calculateTax(event) {
+  public calculateTax(event: ITaxDetails) {
     this.showResults = true;
 
     this.superAnnuationAmount = (event.incomeValue / 100) * event.superannuation;
@@ -35,20 +37,7 @@ export class AppComponent {
       this.grossPlusSuperAmount = event.incomeValue + this.superAnnuationAmount;
     }
 
-    if (this.findRange(event.incomeValue, TaxBand.bandA)) {
-      this.taxAmount = 0;
-    } else if (this.findRange(event.incomeValue, TaxBand.bandA, TaxBand.bandB)) {
-      this.taxAmount = (event.incomeValue - TaxBand.bandA) * 0.19;
-    } else if (this.findRange(event.incomeValue, TaxBand.bandB, TaxBand.bandC)) {
-      const predefinedtaxsumBANDB = 3572;
-      this.taxAmount = ((event.incomeValue - TaxBand.bandB) * 0.325) + predefinedtaxsumBANDB;
-    } else if (this.findRange(event.incomeValue, TaxBand.bandC, TaxBand.bandD)) {
-      const predefinedtaxsumBANDC = 19822;
-      this.taxAmount = ((event.incomeValue - TaxBand.bandC) * 0.37) + predefinedtaxsumBANDC;
-    } else {
-      const predefinedtaxsumBANDD = 54232;
-      this.taxAmount = ((event.incomeValue - TaxBand.bandD) * 0.45) + predefinedtaxsumBANDD;
-    }
+    this.taxAmount = this.getTaxAmount(event.incomeValue, TaxBand);
 
     this.netAmount = event.incomeValue - this.taxAmount;
     this.netPlusSuper = this.netAmount + this.superAnnuationAmount;
@@ -81,11 +70,28 @@ export class AppComponent {
     ];
   }
 
-  public findRange(target, firstRange, secondRange?) {
+  private findRange(target: number, firstRange: number, secondRange?: number): boolean {
     if (!secondRange) {
       return target < firstRange;
     } else {
       return target > firstRange && target <= secondRange;
+    }
+  }
+
+  private getTaxAmount(incomeValue: number, Taxband): number {
+    if (this.findRange(incomeValue, Taxband.bandA)) {
+      return 0;
+    } else if (this.findRange(incomeValue, Taxband.bandA, Taxband.bandB)) {
+      return (incomeValue - Taxband.bandA) * 0.19;
+    } else if (this.findRange(incomeValue, Taxband.bandB, Taxband.bandC)) {
+      const predefinedTaxAmount = 3572;
+      return ((incomeValue - Taxband.bandB) * 0.325) + predefinedTaxAmount;
+    } else if (this.findRange(incomeValue, Taxband.bandC, Taxband.bandD)) {
+      const predefinedTaxAmount = 19822;
+      return ((incomeValue - Taxband.bandC) * 0.37) + predefinedTaxAmount;
+    } else {
+      const predefinedTaxAmount = 54232;
+      return ((incomeValue - Taxband.bandD) * 0.45) + predefinedTaxAmount;
     }
   }
 }

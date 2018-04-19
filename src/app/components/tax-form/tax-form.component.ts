@@ -8,7 +8,7 @@ import {ITaxDetails, ITaxForm} from './tax-form.component.interface';
   styleUrls: ['./tax-form.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TaxFormComponent implements ITaxForm{
+export class TaxFormComponent implements ITaxForm {
   @Output()
   public appTaxFormTaxDetails: EventEmitter<ITaxDetails> = new EventEmitter<ITaxDetails>();
 
@@ -24,15 +24,28 @@ export class TaxFormComponent implements ITaxForm{
   public incomeAmount: number;
   public superAnnuationPercentage: number;
   public selectDisabled: boolean;
+  public showResetButton: boolean;
   private taxDetails: ITaxDetails;
 
   public sendTaxDetails(): void {
     this.setTaxDetails();
+    this.showResetButton = true;
     this.appTaxFormTaxDetails.emit(this.taxDetails);
+  }
+
+  public refreshData(): void {
+    this.incomeFormControl.enable();
+    this.incomeFormControl.reset();
+    this.superannuationFormControl.enable();
+    this.superannuationFormControl.reset();
+    this.selectDisabled = false;
+    this.showResetButton = false;
   }
 
   private setTaxDetails(): void {
     this.selectDisabled = true;
+    this.incomeFormControl.disable();
+    this.superannuationFormControl.disable();
 
     this.taxDetails = {
       incomeValue: this.incomeAmount,

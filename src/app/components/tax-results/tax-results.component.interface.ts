@@ -4,5 +4,5 @@ export interface ITaxData {
 }
 
 export interface ITaxResults {
-  appTaxResultsData: ITaxData
+  appTaxResultsData: ITaxData;
 }
