@@ -1,0 +1,17 @@
+@import "../../../styles";
+
+.header {
+  &-container {
+    align-items: center;
+    background-color: $color-angular-purple;
+    display: flex;
+    font-family: inherit;
+    justify-content: center;
+    padding: 10px 0;
+  }
+
+  &-title {
+    color: $color-white;
+    font-size: 22px;
+  }
+}

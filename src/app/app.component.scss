@@ -1,0 +1,30 @@
+@import "../styles";
+
+.app {
+  &-header {
+    display: block;
+    font-family: $body-font;
+    margin: 0 0 15px 0;
+  }
+
+  &-container {
+    display: block;
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  &-taxForm {
+    display: block;
+    margin: 15px 0;
+
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+
+  &-taxResult {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

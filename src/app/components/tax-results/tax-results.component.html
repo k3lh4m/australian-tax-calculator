@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-list role="list">
+    <ng-container *ngFor="let result of appTaxResultsData">
+      <mat-list-item role="listitem" *ngIf="result.value">
+        <div class="appTaxResults-data">
+          <span class="appTaxResults-label">{{result.label}}</span>
+          <span class="appTaxResults-value">{{result.value | currency:'USD':true:'2.2-4'}}</span>
+        </div>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+</mat-card>

@@ -1,0 +1,11 @@
+.appTaxResults {
+  &-data {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mat-list-item-content {
+    padding: 0 !important;
+  }
+}

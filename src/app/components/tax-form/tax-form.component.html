@@ -1,0 +1,60 @@
+<mat-card>
+  <form #incomeDetails="ngForm">
+    <div class="appTaxForm-select">
+      <mat-form-field>
+        <mat-select [(value)]="optionSelected" placeholder="Please Select" [disabled]="selectDisabled">
+          <mat-option value="grossAnnualIncome">Gross Annual Income</mat-option>
+          <mat-option value="grossAnnualIncomePlusSuper">Gross Annual Income + Super</mat-option>
+        </mat-select>
+        <mat-hint>Please choose your income type</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="appTaxForm-input" *ngIf="optionSelected == 'grossAnnualIncome'">
+      <mat-form-field class="app-formField">
+        <input
+          [(ngModel)]="incomeAmount"
+          [formControl]="incomeFormControl"
+          type="number"
+          matInput
+          placeholder="Annual Income">
+        <mat-hint>Enter your gross annual income</mat-hint>
+        <mat-error *ngIf="incomeFormControl.hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="incomeFormControl.hasError('min')">Please enter a number greater than 0</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="appTaxForm-input" *ngIf="optionSelected == 'grossAnnualIncomePlusSuper'">
+      <mat-form-field class="app-formField">
+        <input
+          [(ngModel)]="incomeAmount"
+          [formControl]="incomeFormControl"
+          type="number"
+          matInput
+          placeholder="Annual Income">
+        <mat-hint>Enter your gross annual income + Superannuation</mat-hint>
+        <mat-error *ngIf="incomeFormControl.hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="incomeFormControl.hasError('min')">Please enter a number greater than 0</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="appTaxForm-input" *ngIf="incomeAmount > 0">
+      <mat-form-field class="app-formField">
+        <input
+          [(ngModel)]="superAnnuationPercentage"
+          [formControl]="superannuationFormControl"
+          type="number"
+          matInput
+          placeholder="Superannuation percentage">
+        <mat-hint>Enter you super annuation percentage</mat-hint>
+        <mat-error *ngIf="superannuationFormControl.hasError('max')">Please enter a value equal or less than 9.5%
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="button-row" *ngIf="superAnnuationPercentage > 0 && superannuationFormControl.valid">
+      <button (click)="sendTaxDetails()" [disabled]="selectDisabled" mat-raised-button color="primary">Calculate Tax</button>
+    </div>
+  </form>
+
+</mat-card>
