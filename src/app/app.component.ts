@@ -1,7 +1,5 @@
-import {Component, ElementRef, ViewChild, ViewEncapsulation} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {TaxBand} from './tax-bands.constant';
-import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
