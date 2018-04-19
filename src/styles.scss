@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'partials/reset';
+@import 'partials/fonts';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+$color-white: #ffffff;
+$color-black: #000000;
+$color-angular-blue: #1a81de;
+$color-angular-purple: #7705b9
+
